@@ -1,0 +1,96 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  font-weight: normal;
+}
+
+body {
+  padding: 10px;
+  background-color: rgb(200, 245, 243);
+}
+
+.title {
+  font-family: "Times New Roman", Times, serif;
+  font-weight: 400;
+  font-size: 12vw;
+  line-height: 11.5vw;
+  margin-bottom: 6vw;
+  color: rgb(7, 84, 65);
+}
+
+.subtitle {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 6vw;
+  margin-bottom: 8vw;
+  color: rgb(7, 84, 65);
+}
+
+.answer-form {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.answer-form input,
+.answer-form button {
+  font-size: 6vw;
+  border-radius: 0;
+  outline: 1px solid gray;
+  border: none;
+}
+
+@media screen and (max-width: 700px) {
+  .answer-form input,
+  .answer-form button,
+  .answer-form {
+    width: 100%;
+  }
+}
+
+button.language-switch {
+  position: fixed;
+  top: 0;
+  right: 0;
+
+  font-size: 6vw;
+  border-radius: 0;
+  outline: 1px solid gray;
+  border: none;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+.gems {
+  max-width: 100%;
+}
+
+.gems img {
+  max-width: 100px;
+}
+
+.draggable {
+  position: fixed;
+  top: 0;
+  left: 0;
+  cursor: grab;
+  touch-action: none;
+  -webkit-user-drag: none;
+}
+
+.draggable:active {
+  cursor: grabbing;
+}
+
+.draggable .dragging {
+  cursor: grabbing;
+  z-index: 1000;
+  transition: none;
+
+  touch-action: none;
+}

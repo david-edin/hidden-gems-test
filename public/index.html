@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hidden Gems</title>
+
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon">
+  </head>
+
+  <script>
+    (function () {
+      // Ensure single run across page loads in same session
+      if (!sessionStorage.getItem("portal_session_id")) {
+        sessionStorage.setItem(
+          "portal_session_id",
+          crypto.randomUUID
+            ? crypto.randomUUID()
+            : Date.now().toString(36) +
+                "-" +
+                Math.random().toString(36).slice(2),
+        );
+      }
+      const sessionId = sessionStorage.getItem("portal_session_id");
+      const startTs = Date.now();
+
+      function sendDuration() {
+        const durationMs = (Date.now() - startTs) / 1000;
+        const payload = {
+          deviceId: sessionId,
+          ts: new Date().toISOString(),
+          durationMs: durationMs,
+        };
+        const blob = new Blob([JSON.stringify(payload)], {
+          type: "application/json;charset=UTF-8",
+        });
+        // navigator.sendBeacon is best-effort and works during unload/visibility changes
+
+        navigator.sendBeacon("/log-visit", blob);
+      }
+
+      // pagehide covers navigation and tab close in modern browsers; visibilitychange catches some cases
+      window.addEventListener("pagehide", sendDuration, { capture: true });
+      document.addEventListener("visibilitychange", function () {
+        if (document.hidden) sendDuration();
+      });
+      // Optional: also send periodically (defensive) to capture long sessions
+    //   setInterval(
+    //     () =>
+    //       navigator.sendBeacon(
+    //         "/log-visit",
+    //         new Blob(
+    //           [
+    //             JSON.stringify({
+    //               deviceId: sessionId,
+    //               ts: new Date().toISOString(),
+    //               durationMs: Date.now() - startTs,
+    //             }),
+    //           ],
+    //           { type: "application/json" },
+    //         ),
+    //       ),
+    //     30000,
+    //   );
+    })();
+  </script>
+
+  <body>
+    <h1 class="title" id="response-field">
+      Hey you! <br/>Discover a hidden gem in Berlin!
+    </h1>
+
+    <p class="subtitle" id="response-time">
+      Put in a secret place (the hidden gem) in Berlin that you like a lot that may not be known by a lot of
+      people and you get a secret place, a hidden gem in return! You can put in brackets, what the place is about if you want.
+    </p>
+
+    <form class="answer-form" id="answer">
+      <input id="answer-input" type="text" name="answer" placeholder="Answer..." />
+      <button id="answer-button" type="submit">Submit</button>
+    </form>
+
+    <div class="response">
+      <p class="subtitle" id="response-loading"></p>
+    </div>
+
+    <button id="language-selector" value="de" class="language-switch">
+        de
+    </button>
+
+    <div class="gems">
+        <img class="draggable" src="assets/jewel (1).gif" alt="a gem" title="a gem">
+        <img class="draggable" src="assets/jewel (2).gif" alt="a gem" title="a gem">
+        <img class="draggable" src="assets/jewel (3).gif" alt="a gem" title="a gem">
+        <img class="draggable" src="assets/jewel (4).gif" alt="a gem" title="a gem">
+        <img class="draggable" src="assets/jewel (5).gif" alt="a gem" title="a gem">
+    </div>
+
+    <!-- <p>
+      <strong>Endpoint /api/ping test: </strong>
+      <span id="api-endpoint-test">Waiting for server response...</span>
+    </p> -->
+
+    <script src="index.js"></script>
+  </body>
+</html>
