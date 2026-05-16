@@ -26,6 +26,7 @@ let selectedLanguage = "en";
 
 const form = document.querySelector("#answer");
 const answer = form.querySelector('[name="answer"]');
+const answer_button = form.querySelector("#answer-button");
 
 const response_loading = document.querySelector("#response-loading");
 const response_field = document.querySelector("#response-field");
@@ -49,12 +50,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (localStorage.getItem("language") !== null) {
       selectedLanguage = localStorage.getItem("language");
+    }
 
-      if (selectedLanguage === "en") {
-        submitted = "Submitted";
-      } else {
-        submitted = "Eingereicht";
-      }
+    if (selectedLanguage === "en") {
+      submitted = "Submitted";
+    } else {
+      submitted = "Eingereicht";
     }
 
     response_field.textContent = localStorage.getItem("response_answer");
@@ -162,9 +163,11 @@ async function recieveData() {
       }
 
       response_time.innerHTML = submitted + ": " + answer_time;
+      response_time.style.display = "block";
 
       setTimeout(() => {
         response_field.innerHTML = response_answer;
+        response_field.style.display = "block";
       }, 500);
     }, 500);
   } catch (e) {
@@ -181,28 +184,44 @@ function insertResponse() {
       "Danke für deinen Beitrag! Das ist ein echter Geheimtipp, den du dir unbedingt ansehen solltest! Ich denke, du kannst diese Seite jetzt schließen, nachdem du einen Screenshot gemacht hast.";
   }
 
-  response_time.innerHTML = "";
-  response_field.innerHTML = "";
+  response_time.style.display = "none";
+  response_field.style.display = "none";
 
   localStorage.setItem("answered", answered);
 
   recieveData();
 }
 
+form.addEventListener("input", (e) => {
+  console.log(answer.value, answer.value.length);
+  if (answer.value.length > 2) {
+    answer_button.style.color = "black";
+    answer_button.disabled = false;
+  } else {
+    answer_button.style.color = "gray";
+    answer_button.disabled = true;
+  }
+});
+
 // Take over form submission
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
 
-  answered = true;
-
   const data = answer.value;
-  sendData(data);
 
-  form.remove();
-  languageSelector.remove();
+  if (data != "") {
+    answered = true;
+    sendData(data);
 
-  insertResponse();
+    form.remove();
+    languageSelector.remove();
+
+    insertResponse();
+  }
 });
+
+// Gems
+console.log(document.querySelector(".gems"));
 
 const IMAGE_WIDTH = 100;
 const MARGIN = 20; // Minimum margin from edges
@@ -215,8 +234,8 @@ function getRandomPosition() {
   const maxX = Math.max(0, viewportWidth - IMAGE_WIDTH - MARGIN);
   const maxY = Math.max(0, viewportHeight - IMAGE_WIDTH - MARGIN);
 
-  const randomX = (Math.floor(Math.random() * (maxX - MARGIN + 1)) + MARGIN);
-  const randomY = (Math.floor(Math.random() * (maxY - MARGIN + 1)) + MARGIN);
+  const randomX = Math.floor(Math.random() * (maxX - MARGIN + 1)) + MARGIN;
+  const randomY = Math.floor(Math.random() * (maxY - MARGIN + 1)) + MARGIN;
 
   return { x: randomX, y: randomY };
 }

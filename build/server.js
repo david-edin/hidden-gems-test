@@ -20,7 +20,7 @@ const fs = require("fs");
 // Database connection
 const Database = require("better-sqlite3");
 ////////////////////////////// Setup ///////////////////////////////////////////
-const HOST_NAME = "localhost";
+const HOST_NAME = "192.168.0.143";
 const FRONTEND_FOLDER = path_1.default.join(__dirname, "../", "public");
 const app = (0, express_1.default)();
 const LOG_FILE = path_1.default.join(__dirname, "visits.log");

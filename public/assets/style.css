@@ -8,23 +8,38 @@
 
 body {
   padding: 10px;
-  background-color: rgb(200, 245, 243);
+  background-color: rgb(240, 240, 240);
 }
 
 .title {
-  font-family: "Times New Roman", Times, serif;
+  font-family: Arial, Helvetica, sans-serif;
   font-weight: 400;
   font-size: 12vw;
-  line-height: 11.5vw;
+  line-height: 12vw;
   margin-bottom: 6vw;
-  color: rgb(7, 84, 65);
+  color: rgb(23, 136, 201);
+  background-color: rgb(225, 241, 252);
+
+  padding: 10px;
 }
 
 .subtitle {
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 6vw;
-  margin-bottom: 8vw;
-  color: rgb(7, 84, 65);
+  font-size: 7vw;
+  color: rgb(255, 72, 0);
+  background-color: rgb(255, 227, 216);
+
+  padding: 10px;
+}
+
+.subtitle-2 {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 7vw;
+  margin-bottom: 32vw;
+  color: gray;
+
+  padding: 10px;
+  border-radius: 20px;
 }
 
 .answer-form {
@@ -37,10 +52,16 @@ body {
 
 .answer-form input,
 .answer-form button {
-  font-size: 6vw;
+  font-size: 8vw;
   border-radius: 0;
   outline: 1px solid gray;
   border: none;
+  color: gray;
+}
+
+.answer-form button {
+  background-color: rgb(240, 240, 240);
+  height: 10vw;
 }
 
 @media screen and (max-width: 700px) {
@@ -56,18 +77,25 @@ button.language-switch {
   top: 0;
   right: 0;
 
-  font-size: 6vw;
+  font-size: 8vw;
   border-radius: 0;
-  outline: 1px solid gray;
-  border: none;
+  outline: none;
+  border: 1px solid gray;
+  color: rgb(12, 180, 49);
+  background-color: rgb(225, 250, 215);
 }
 
 button:hover {
   cursor: pointer;
 }
 
+button:disabled:hover {
+  cursor: default;
+}
+
 .gems {
   max-width: 100%;
+  display: none;
 }
 
 .gems img {

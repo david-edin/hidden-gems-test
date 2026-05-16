@@ -8,7 +8,7 @@ const Database = require("better-sqlite3");
 
 ////////////////////////////// Setup ///////////////////////////////////////////
 
-const HOST_NAME = "localhost";
+const HOST_NAME = "192.168.0.143";
 const FRONTEND_FOLDER = path.join(__dirname, "../", "public");
 
 const app = express();
